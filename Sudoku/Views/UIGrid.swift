@@ -9,21 +9,15 @@ import UIKit
 
 class UIGrid<T:UIView>: UIView {
     
+    var elements: [T] = []
+    
     private var height = 0
     private var width = 0
     private var border = 0.0
     private var spacing = 0.0
     
-    private lazy var mainStack: UIStackView = {
-        var stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private var stacks: [UIStackView] = []
+    private let mainStack = UIStackView()
+    private let stacks: [UIStackView] = []
     
     init(height: Int, width: Int, border: Double, spacing: Double) {
         self.height = height
@@ -33,8 +27,8 @@ class UIGrid<T:UIView>: UIView {
         
         super.init(frame: CGRect.zero)
         
-        configure()
         createGrid()
+        configure()
     }
     
     override init(frame: CGRect) {
@@ -55,14 +49,19 @@ class UIGrid<T:UIView>: UIView {
     }
     
     private func createGrid() {
+        mainStack.axis = .vertical
+        mainStack.distribution = .fillEqually
         mainStack.spacing = spacing
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(mainStack)
         for _ in 0..<height {
             let stack = UIStackView()
-            stack.axis = .vertical
+            stack.axis = .horizontal
             stack.spacing = spacing
             stack.distribution = .fillEqually
             for _ in 0..<width {
                 let element = T()
+                elements.append(element)
                 stack.addArrangedSubview(element)
             }
             mainStack.addArrangedSubview(stack)

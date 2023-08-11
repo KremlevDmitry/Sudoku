@@ -8,5 +8,13 @@
 import Foundation
 
 class Game {
+    var numbers: [[Int?]]
     
+    init() {
+        numbers = Array(repeating: Array(repeating: nil, count: 9), count: 9)
+    }
+    
+    func newGame() {
+        
+    }
 }

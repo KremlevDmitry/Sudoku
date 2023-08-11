@@ -8,6 +8,10 @@
 import UIKit
 
 class SudokuCell: UIButton {
+    
+    var block: SudokuBlock?
+    var position: (x: Int, y: Int)?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -18,7 +22,7 @@ class SudokuCell: UIButton {
     }
     
     @objc func click() {
-        backgroundColor = .systemBlue
+        block?.click(cell: self)
     }
     
     required init?(coder: NSCoder) {

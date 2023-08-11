@@ -9,8 +9,6 @@ import UIKit
 
 class SudokuField: UIGrid<SudokuBlock> {
 
-    var blocks: [SudokuBlock] = []
-    
     init() {
         super.init(
             height: Resources.Field.verticalBlocksNumber,
@@ -19,7 +17,19 @@ class SudokuField: UIGrid<SudokuBlock> {
             spacing: Resources.Field.spacingWidth)
         
         backgroundColor = Resources.Colors.field
-        translatesAutoresizingMaskIntoConstraints = false
+        
+        for index in elements.indices {
+            let block = elements[index]
+            block.field = self
+            
+            let width = Resources.Field.horizontalBlocksNumber
+            block.position = (index % width, index / width)
+        }
+    }
+    
+    func click(cell: SudokuCell, block: SudokuBlock) {
+        print("Block x: \(String(describing: block.position?.x)), y: \(String(describing: block.position?.y))")
+        print("Cell x: \(String(describing: cell.position?.x)), y: \(String(describing: cell.position?.y))")
     }
     
     required init?(coder: NSCoder) {
